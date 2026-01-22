@@ -15,6 +15,7 @@ authors = [
 dependencies = [
     "pillow>=9.0.0",
     "pydub>=0.25.1",
+    "pyttsx3>=2.90",
 ]
 
 [project.optional-dependencies]

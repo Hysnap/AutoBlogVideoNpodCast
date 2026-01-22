@@ -1,0 +1,64 @@
+# AutoBlogVideoNpodCast - Python Dependencies
+# Project: blog_visual_engine
+# Version: 0.1.0
+# Python: >= 3.8
+
+# Core Dependencies
+# =================
+# These are required to run the blog_visual_engine package
+
+pyttsx3>=2.90
+# Offline text-to-speech synthesis engine
+# - No internet required
+# - Cross-platform (Windows, macOS, Linux)
+# - Supports multiple voices
+# - Adjustable speech rate and volume
+
+pillow>=9.0.0
+# Image processing library
+# Used for:
+# - Creating and manipulating slide images
+# - Generating chart visualizations
+# - Image composition and layout
+# - Format conversion (PNG, JPG, etc.)
+
+pydub>=0.25.1
+# Audio processing library
+# Used for:
+# - Audio file manipulation
+# - Audio mixing and concatenation
+# - Format conversion (WAV, MP3, etc.)
+# - Duration calculation
+
+# Development Dependencies (optional)
+# ===================================
+# Install with: pip install -e ".[dev]"
+
+pytest>=7.0.0
+# Unit testing framework
+# Used for running test suite
+
+black>=22.0.0
+# Code formatter
+# Ensures consistent code style (PEP 8)
+
+flake8>=4.0.0
+# Code linter
+# Checks for style violations and potential errors
+
+# Optional Dependencies
+# ====================
+# Install specific tools as needed
+
+# For enhanced chart generation:
+# matplotlib>=3.5.0
+# scipy>=1.8.0
+
+# For advanced video rendering:
+# opencv-python>=4.5.0
+# ffmpeg-python>=0.2.1
+
+# Note: ffmpeg binary (not Python package) must be installed separately:
+# Windows: choco install ffmpeg
+# macOS: brew install ffmpeg
+# Linux: sudo apt-get install ffmpeg
