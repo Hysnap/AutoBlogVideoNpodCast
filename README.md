@@ -1,94 +1,157 @@
-<header>
+# AutoBlogVideoNpodCast
 
-<!--
-  <<< Author notes: Course header >>>
-  Read <https://skills.github.com/quickstart> for more information about how to build courses using this template.
-  Include a 1280×640 image, course name in sentence case, and a concise description in emphasis.
-  In your repository settings: enable template repository, add your 1280×640 social image, auto delete head branches.
-  Next to "About", add description & tags; disable releases, packages, & environments.
-  Add your open source license, GitHub uses the MIT license.
--->
+**Convert your blog posts into engaging multimedia content - videos, audio narration, and visual presentations.**
 
-# Code with GitHub Copilot
+An open-source Python library that automatically transforms Markdown blog posts into multimedia content including video presentations, audio narration, and visual slides. Designed with an offline-first approach and treating blog text as the single source of truth.
 
-_GitHub Copilot can help you code by offering autocomplete-style suggestions right in VS Code and Codespaces._
+## Features
 
-</header>
+- **High-Quality Text-to-Speech**: Convert blog text to natural-sounding audio narration
+  - **Kokoro TTS** (Recommended): Neural TTS with 10 high-quality voices
+  - **pyttsx3** (Alternative): System TTS for smaller footprint
+  - Cross-platform support (Windows, macOS, Linux)
+  - Multiple voice options with customizable speed
+  - Batch processing for multiple text segments
+  - See [Kokoro Setup Guide](KOKORO_SETUP.md) for installation
 
-<!--
-  <<< Author notes: Step 1 >>>
-  Choose 3-5 steps for your course.
-  The first step is always the hardest, so pick something easy!
-  Link to docs.github.com for further explanations.
-  Encourage users to open new tabs for steps!
--->
+- **Visual Generation**: Create compelling visuals from your content
+  - Generate bar charts, line charts, and pie charts from data
+  - Customizable color themes and styling
+  - Export in PNG/JPG formats
 
-## Step 1: Leverage Codespaces with VS Code for Copilot
+- **Slide Creation**: Build professional presentations
+  - Multiple layout types (title, content, two-column, image-text)
+  - Automated positioning and formatting
+  - Export slides as images or video
 
-_Welcome to "Develop With AI Powered Code Suggestions Using GitHub Copilot and VS Code"! :wave:_
+- **Markdown Parsing**: Full support for blog post structure
+  - Extract sections, headings, and content
+  - Parse data/metrics for visualization
+  - Generate metadata automatically
 
-GitHub Copilot is an AI pair programmer that helps you write code faster and with less work. It draws context from comments and code to suggest individual lines and whole functions instantly. GitHub Copilot is powered by OpenAI Codex, a generative pretrained language model created by OpenAI.
+## Philosophy
 
-**Copilot works with many code editors including VS Code, Visual Studio, JetBrains IDE, and Neovim.**
+- **Blog text is the source of truth** - Your written content drives everything
+- **Visuals are derived artifacts** - Charts and slides generated from your content
+- **Offline-first and open-source** - No API dependencies, complete local control
 
-Additionally, GitHub Copilot is trained on all languages that appear in public repositories. For each language, the quality of suggestions you receive may depend on the volume and diversity of training data for that language.
+## Quick Start
 
-Using Copilot inside a Codespace shows just how easy it is to get up and running with GitHub's suite of [Collaborative Coding](https://github.com/features#features-collaboration) tools.
+### Installation
 
-> **Note**
-> This skills exercise will focus on leveraging GitHub Codespace. It is recommended that you complete the GitHub skill, [Codespaces](https://github.com/skills/code-with-codespaces), before moving forward with this exercise.
+```bash
+# Navigate to the project directory
+cd blog_visual_engine
 
-### :keyboard: Activity: Enable Copilot inside a Codespace
+# Install core dependencies
+pip install -r requirements.txt
 
-**We recommend opening another browser tab to work through the following activities so you can keep these instructions open for reference.**
+# Or install as a package
+pip install -e .
+```
 
-Before you open up a codespace on a repository, you can create a development container and define specific extensions or configurations that will be used or installed in your codespace. Let's create this development container and add copilot to the list of extensions.
+### Convert Blog Post to Audio
 
-1. Navigating back to your **Code** tab of your repository, click the **Add file** drop-down button, and then click `Create new file`.
-1. Type or paste the following in the empty text field prompt to name your file.
-   ```
-   .devcontainer/devcontainer.json
-   ```
-1. In the body of the new **.devcontainer/devcontainer.json** file, add the following content:
-   ```
-   {
-       // Name this configuration
-       "name": "Codespace for Skills!",
-       "customizations": {
-           "vscode": {
-               "extensions": [
-                   "GitHub.copilot"
-               ]
-           }
-       }
-   }
-   ```
-1. Select the option to **Commit directly to the `main` branch**, and then click the **Commit new file** button.
-1. Navigate back to the home page of your repository by clicking the **Code** tab located at the top left of the screen.
-1. Click the **Code** button located in the middle of the page.
-1. Click the **Codespaces** tab on the box that pops up.
-1. Click the **Create codespace on main** button.
+```bash
+# Basic conversion
+python blog_to_audio.py examples/minimal_post/post.md
 
-   **Wait about 2 minutes for the codespace to spin itself up.**
+# With custom settings
+python blog_to_audio.py post.md -o narration.wav --speed 160 --volume 0.8
 
-1. Verify your codespace is running. The browser should contain a VS Code web-based editor and a terminal should be present such as the below:
-   ![Screen Shot 2023-03-09 at 9 09 07 AM](https://user-images.githubusercontent.com/26442605/224102962-d0222578-3f10-4566-856d-8d59f28fcf2e.png)
-1. The `copilot` extension should show up in the VS Code extension list. Click the extensions sidebar tab. You should see the following:
-   ![Screen Shot 2023-03-09 at 9 04 13 AM](https://user-images.githubusercontent.com/26442605/224102514-7d6d2f51-f435-401d-a529-7bae3ae3e511.png)
+# List available voices
+python blog_to_audio.py post.md --list-voices
+```
 
-**Wait about 60 seconds then refresh your repository landing page for the next step.**
+### Using in Python
 
-<footer>
+```python
+from blog_visual_engine.audio.kokoro_tts import KokoroTTS
+from pathlib import Path
 
-<!--
-  <<< Author notes: Footer >>>
-  Add a link to get support, GitHub status page, code of conduct, license link.
--->
+# Initialize Kokoro TTS engine (high quality)
+tts = KokoroTTS(voice="af_sarah", speed=1.0)
 
----
+# Convert text to audio
+text = "Hello! This is high-quality text-to-speech."
+tts.synthesize(text, Path("output.wav"))
 
-Get help: [Post in our discussion board](https://github.com/orgs/skills/discussions/categories/code-with-copilot) &bull; [Review the GitHub status page](https://www.githubstatus.com/)
+# Batch process multiple segments
+segments = ["Segment one", "Segment two", "Segment three"]
+audio_files = tts.synthesize_batch(segments, Path("output_dir"))
+```
 
-&copy; 2023 GitHub &bull; [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md) &bull; [MIT License](https://gh.io/mit)
+**Alternative - Using pyttsx3 (system TTS)**:
+```python
+from blog_visual_engine.audio.tts import TextToSpeech
 
-</footer>
+tts = TextToSpeech(speed=150, volume=0.9)
+tts.synthesize("Hello", Path("output.wav"))
+```
+
+## Project Structure
+
+```
+AutoBlogVideoNpodCast/
+├── blog_visual_engine/       # Core Python library
+│   ├── audio/               # Text-to-speech modules
+│   ├── visuals/             # Chart and visual generation
+│   ├── slides/              # Presentation creation
+│   ├── config/              # Themes and configuration
+│   └── utils/               # Utility functions
+├── blog_to_video/           # Example project structure
+│   ├── source/              # Blog post markdown files
+│   ├── audio/               # Generated audio files
+│   └── visuals/             # Generated visual assets
+├── examples/                # Usage examples and demos
+├── REQUIREMENTS.md          # Detailed requirements documentation
+├── INSTALLATION.md          # Comprehensive installation guide
+└── DEPENDENCIES.md          # Dependency reference
+```
+
+## Documentation
+
+- **[Kokoro TTS Setup](KOKORO_SETUP.md)** - Complete Kokoro TTS installation and configuration guide
+- [Installation Guide](INSTALLATION.md) - Platform-specific setup instructions
+- [Requirements](REQUIREMENTS.md) - Detailed functional and technical requirements
+- [Dependencies](DEPENDENCIES.md) - Complete dependency reference
+- [Library README](blog_visual_engine/README.md) - Core library documentation
+
+## Requirements
+
+- Python 3.8 or higher
+- Platform-specific audio drivers (for system TTS)
+- Core dependencies: kokoro-onnx (or pyttsx3), Pillow, pydub
+
+See [KOKORO_SETUP.md](KOKORO_SETUP.md) and [DEPENDENCIES.md](DEPENDENCIES.md) for complete details.
+
+## Development
+
+```bash
+# Install with development tools
+pip install -r requirements-dev.txt
+
+# Or use optional dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+```
+
+## Examples
+
+- `examples/minimal_post/` - Minimal blog post conversion example
+- `examples/tts_demo.py` - Interactive TTS demonstration
+- `blog_to_audio.py` - CLI tool for blog-to-audio conversion
+
+## License
+
+MIT License - See [LICENSE](LICENSE) for details.
+
+## Contributing
+
+Contributions are welcome! This project emphasizes:
+- Offline-first capabilities
+- Open-source dependencies only
+- Blog text as the source of truth
+- Cross-platform compatibility

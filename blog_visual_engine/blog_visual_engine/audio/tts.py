@@ -93,9 +93,22 @@ class TextToSpeech:
         output_dir.mkdir(parents=True, exist_ok=True)
         audio_files = []
 
+        # Queue all segments for synthesis at once to avoid engine hang
         for i, text in enumerate(text_segments):
             output_path = output_dir / f"segment_{i:03d}.wav"
-            audio_files.append(self.synthesize(text, output_path))
+            
+            # Ensure output is WAV format
+            if output_path.suffix.lower() != '.wav':
+                output_path = output_path.with_suffix('.wav')
+            
+            self.engine.save_to_file(text, str(output_path))
+            audio_files.append(output_path)
+        
+        # Process all queued segments at once
+        self.engine.runAndWait()
+        
+        # Reinitialize engine to prevent hang on Windows
+        self._reinitialize_engine()
 
         return audio_files
 
@@ -161,6 +174,20 @@ class TextToSpeech:
     def stop(self) -> None:
         """Stop the current speech."""
         self.engine.stop()
+    
+    def _reinitialize_engine(self) -> None:
+        """Reinitialize the TTS engine to prevent hang issues on Windows."""
+        try:
+            self.engine.stop()
+        except:
+            pass
+        
+        # Reinitialize with same settings
+        self.engine = pyttsx3.init()
+        self.engine.setProperty('rate', self.speed)
+        self.engine.setProperty('volume', self.volume)
+        if self.voice_id:
+            self.engine.setProperty('voice', self.voice_id)
     
     def __del__(self):
         """Cleanup TTS engine."""

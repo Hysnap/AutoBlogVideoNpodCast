@@ -7,12 +7,27 @@
 # =================
 # These are required to run the blog_visual_engine package
 
-pyttsx3>=2.90
-# Offline text-to-speech synthesis engine
+# Text-to-Speech Options (install ONE of the following):
+
+# Option 1: Kokoro TTS (Recommended - High Quality Neural TTS)
+kokoro-onnx>=0.1.0
+soundfile>=0.12.1
+misaki[en]>=1.0.0
+# High-quality neural text-to-speech
+# - Natural-sounding voices with excellent prosody
+# - 10+ curated voices (American/British, Male/Female)
+# - Offline after initial model download (~300MB)
+# - Fast generation using ONNX Runtime
+# See KOKORO_SETUP.md for setup instructions
+
+# Option 2: pyttsx3 (Alternative - System TTS)
+# pyttsx3>=2.90
+# Basic offline text-to-speech synthesis engine
 # - No internet required
 # - Cross-platform (Windows, macOS, Linux)
-# - Supports multiple voices
+# - Uses system voices
 # - Adjustable speech rate and volume
+# Note: Lower quality than Kokoro but smaller footprint
 
 pillow>=9.0.0
 # Image processing library
@@ -51,12 +66,12 @@ flake8>=4.0.0
 # Install specific tools as needed
 
 # For enhanced chart generation:
-# matplotlib>=3.5.0
-# scipy>=1.8.0
+matplotlib>=3.5.0
+scipy>=1.8.0
 
 # For advanced video rendering:
-# opencv-python>=4.5.0
-# ffmpeg-python>=0.2.1
+opencv-python>=4.5.0
+ffmpeg-python>=0.2.0
 
 # Note: ffmpeg binary (not Python package) must be installed separately:
 # Windows: choco install ffmpeg
